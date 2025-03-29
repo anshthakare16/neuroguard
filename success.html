@@ -3,37 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You - Neuro Guard</title>
+    <title>Success - Neuro Guard</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background: linear-gradient(to right, #141e30, #243b55);
             margin: 0;
             padding: 0;
             color: #fff;
+            text-align: center;
         }
         .container {
-            width: 50%;
-            margin: 100px auto;
-            text-align: center;
-            background: #1c1c1c;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            margin-top: 100px;
         }
         h1 {
             color: #4CAF50;
         }
         p {
             font-size: 18px;
+            margin-top: 10px;
+        }
+        .btn {
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
             margin-top: 20px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Thank You!</h1>
-        <p>Your order has been placed successfully.</p>
+        <h1>🎉 Payment Successful!</h1>
+        <p>Your order has been placed successfully. Thank you for shopping with us! 😊</p>
+        <p id="order-id" style="font-size: 18px;"></p>
+        <div id="order-summary"></div>
+        <a href="index.html">
+            <button class="btn">Go Back to Home</button>
+        </a>
     </div>
+
+    <script>
+        function generateOrderID() {
+            return 'ORD-' + Math.floor(Math.random() * 1000000);
+        }
+        const orderId = generateOrderID();
+        document.getElementById('order-id').innerText = `Order ID: ${orderId}`;
+
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let summaryHTML = '<ul style="text-align: left; padding-left: 20%; list-style-type: none;">';
+        let total = 0;
+
+        cart.forEach(item => {
+            summaryHTML += `
+                <li>
+                    <strong>${item.name}</strong><br>
+                    Price: ₹${item.price}<br>
+                    Features: ${item.features}
+                </li><br>
+            `;
+            total += item.price;
+        });
+
+        summaryHTML += `</ul><p style="font-size: 20px;"><strong>Total Paid: ₹${total}</strong></p>`;
+        document.getElementById('order-summary').innerHTML = summaryHTML;
+
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 5000); // Redirect after 5 seconds
+    </script>
 </body>
 </html>
