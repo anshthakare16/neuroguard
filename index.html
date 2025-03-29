@@ -242,7 +242,9 @@
             if (cart.length === 0) {
                 alert('Your cart is empty! Add items to proceed.');
             } else {
-                alert('Redirecting to checkout...');
+                // Save cart data to localStorage for checkout page
+                localStorage.setItem('cart', JSON.stringify(cart));
+                window.location.href = 'checkout.html';
             }
         }
     </script>
