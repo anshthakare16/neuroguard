@@ -5,68 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout - Neuro Guard</title>
     <style>
+        /* Gradient Animation for Background */
+        @keyframes gradientWave {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Slogan Animation */
+        @keyframes waveAnimation {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Body Styling with Wavy Background */
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #141e30, #243b55);
             margin: 0;
             padding: 0;
+            background: linear-gradient(135deg, #ff6b6b, #f06595, #845ef7, #22a6b3);
+            background-size: 300% 300%;
+            animation: gradientWave 10s ease-in-out infinite;
             color: #fff;
         }
+
+        /* Slogan Container with Lower Position */
+        #slogan-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            position: absolute;
+            top: 70px; /* Moved lower to 70px */
+            left: 0;
+            z-index: 10;
+        }
+
+        #slogan {
+            display: inline-block;
+            font-size: 30px;
+            font-weight: bold;
+            color: #000;
+            text-transform: uppercase;
+            animation: waveAnimation 15s linear infinite;
+        }
+
         .container {
             width: 50%;
-            margin: 50px auto;
-            background: #1c1c1c;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            margin: 150px auto 50px auto;
+            background: linear-gradient(to bottom right, #1f1f1f, #4e4e4e);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
         }
+
         h2 {
             color: #4CAF50;
             text-align: center;
+            font-size: 28px;
         }
+
         label {
             display: block;
             margin-top: 15px;
+            font-weight: bold;
         }
+
         input, select, textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #444;
+            border-radius: 8px;
+            border: 1px solid #666;
+            background: #2c2c2c;
+            color: #fff;
         }
+
         .btn {
             background: linear-gradient(90deg, #4CAF50, #45a049);
             color: white;
-            padding: 12px 25px;
+            padding: 14px 28px;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
             margin-top: 20px;
             width: 100%;
+            font-size: 18px;
+            box-shadow: 0 5px 20px rgba(72, 239, 128, 0.4);
         }
+
         .btn:hover {
             background: #45a049;
         }
+
         #payment-methods {
             margin-top: 20px;
         }
+
         .hidden {
             display: none;
         }
+
         #qr-code {
             margin-top: 20px;
             text-align: center;
         }
+
         #qr-code img {
-            width: 200px;
+            width: 250px;
             margin-top: 10px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
         }
     </style>
 </head>
 <body>
+
+    <!-- Slogan Section -->
+    <div id="slogan-container">
+        <div id="slogan">
+            SAFETY IS NOT A LUXURY • SAFETY IS NOT A LUXURY • SAFETY IS NOT A LUXURY
+        </div>
+    </div>
+
     <div class="container">
         <h2>🛒 Checkout</h2>
         <form id="checkout-form">
@@ -115,6 +175,7 @@
     </div>
 
     <script>
+        // Show/Hide Payment Options Based on Selection
         function togglePaymentOptions() {
             document.getElementById('card-details').classList.add('hidden');
             document.getElementById('upi-details').classList.add('hidden');
@@ -130,6 +191,7 @@
             }
         }
         
+        // Form Validation and Payment Handling
         function submitOrder() {
             const address = document.getElementById('address').value.trim();
             const pincode = document.getElementById('pincode').value.trim();
@@ -168,7 +230,6 @@
                     return;
                 }
 
-                // ✅ Card Payment Successful
                 alert('✅ Payment Successful! Your order has been placed.');
                 window.location.href = 'success.html';
                 return;
@@ -182,7 +243,6 @@
                     return;
                 }
 
-                // 🔔 UPI Payment Confirmation
                 alert('🔔 Please go to your respective payment app to confirm and pay.');
                 setTimeout(() => {
                     alert('✅ Payment Successful! Your order has been placed.');
@@ -191,13 +251,14 @@
                 return;
             }
 
-            // If QR Code is selected, just prompt to scan and confirm
+            // If QR Code is selected, just prompt to scan and proceed
             if (paymentMethod === 'qr') {
-                alert('✅ Scan the QR code to complete your payment.');
+                alert('🔔 Please scan the QR code to complete the payment.');
                 setTimeout(() => {
                     alert('✅ Payment Successful! Your order has been placed.');
                     window.location.href = 'success.html';
                 }, 3000);
+                return;
             }
         }
     </script>
